@@ -63,7 +63,7 @@ def main():
 
 	#home page - landing page
 	if selection == "Home":
-		st.subheader("All of my learning is thanks to SKLearn. I am trained in three classification models, using sklearn libraries!")
+		st.subheader("All of my learning is thanks to SKLearn. I am trained in four classification models, using sklearn libraries!")
 		st.markdown('**Head over to the predictions tab to see how much I can do.**')
 		# You can read a markdown file from supporting resources folder
 		st.image(image2,use_column_width=True)
@@ -144,6 +144,28 @@ def main():
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
 			predictor = joblib.load(open(os.path.join("resources/randomforest_mixsample.pkl"),"rb"))
+			answer = predictor.predict(vect_text)
+
+			# When model has successfully run, will print prediction
+			# You can use a dictionary or similar structure to make this output
+			# more human interpretable.
+			if answer[0] == 1:
+  				st.success('Your message has been classified as showing positive belief in climate change')
+			elif answer[0] == 0:
+  				st.success('Your message has been classified as showing being neutral towards climate change')
+			elif answer[0] == 2:
+  				st.success('Your message has been classified as news')
+			else:
+  				st.success('Your message has been classified as showing negative belief in climate change')
+			#st.success("Text Categorized as: {}".format(prediction))
+
+		if st.button("SGD Classifier"):
+			# Transforming user input with vectorizer
+			#vect_text = tweet_cv.transform([tweet_text]).toarray()
+			vect_text = [tweet_text]
+			# Load your .pkl file with the model of your choice + make predictions
+			# Try loading in multiple models to give the user a choice
+			predictor = joblib.load(open(os.path.join("resources/SGD_upsample.pkl"),"rb"))
 			answer = predictor.predict(vect_text)
 
 			# When model has successfully run, will print prediction
